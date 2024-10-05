@@ -395,7 +395,7 @@ class _AnimatedAdditionListViewState<T>
     }
 
     ///is scrolling or not
-    if (widget.controller.scrollController.isScrolling()) {
+    if (widget.controller.scrollController.isScrollingApproximate()) {
       return;
     }
 

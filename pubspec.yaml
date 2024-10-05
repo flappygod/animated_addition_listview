@@ -1,6 +1,6 @@
 name: animated_addition_listview
 description: "This is a project that use in chat message list to anchor the item you need."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/flappygod/animated_addition_listview.git
 
 environment:

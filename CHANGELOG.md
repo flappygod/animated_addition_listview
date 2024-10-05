@@ -1,3 +1,3 @@
-## 1.0.0
+## 1.0.1
 
-* This is a project that use in chat message list to anchor the item you need.
+* Fix bugs in anchor scroll view and remove un need code.
