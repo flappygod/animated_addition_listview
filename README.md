@@ -1,39 +1,136 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+<p>
+///animated&nbsp;addition&nbsp;test&nbsp;page<br>
+class&nbsp;AnimatedAdditionTest&nbsp;extends&nbsp;StatefulWidget&nbsp;{<br>
+&nbsp;&nbsp;const&nbsp;AnimatedAdditionTest({super.key});</p>
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+<p>&nbsp;&nbsp;@override<br>
+&nbsp;&nbsp;State&lt;StatefulWidget&gt;&nbsp;createState()&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;_AnimatedAdditionTestState();<br>
+&nbsp;&nbsp;}<br>
+}</p>
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+<p>///animated&nbsp;addition&nbsp;test&nbsp;page&nbsp;state<br>
+class&nbsp;_AnimatedAdditionTestState&nbsp;extends&nbsp;State&lt;AnimatedAdditionTest&gt;&nbsp;{<br>
+&nbsp;&nbsp;///controller<br>
+&nbsp;&nbsp;late&nbsp;AnimatedAdditionListViewController&lt;String&gt;&nbsp;_controller;</p>
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+<p>&nbsp;&nbsp;@override<br>
+&nbsp;&nbsp;void&nbsp;initState()&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;///init&nbsp;controller<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_controller&nbsp;=&nbsp;AnimatedAdditionListViewController&lt;String&gt;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///provide&nbsp;head&nbsp;data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tailDataProvider:&nbsp;(String?&nbsp;current,&nbsp;int&nbsp;count)&nbsp;async&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;number&nbsp;=&nbsp;(current&nbsp;!=&nbsp;null&nbsp;?&nbsp;int.parse(current)&nbsp;:&nbsp;0)&nbsp;+&nbsp;1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;String&gt;&nbsp;dataList&nbsp;=&nbsp;[];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(int&nbsp;s&nbsp;=&nbsp;number;&nbsp;s&nbsp;&lt;&nbsp;number&nbsp;+&nbsp;count;&nbsp;s++)&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataList.add(s.toString());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;dataList;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>
 
-## Features
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///provide&nbsp;current&nbsp;data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headDataProvider:&nbsp;(String?&nbsp;current,&nbsp;int&nbsp;count)&nbsp;async&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;number&nbsp;=&nbsp;(current&nbsp;!=&nbsp;null&nbsp;?&nbsp;int.parse(current)&nbsp;:&nbsp;0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;String&gt;&nbsp;dataList&nbsp;=&nbsp;[];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(int&nbsp;s&nbsp;=&nbsp;number&nbsp;-&nbsp;count;&nbsp;s&nbsp;&lt;&nbsp;number;&nbsp;s++)&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataList.add(s.toString());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataList.removeWhere((e)&nbsp;=&gt;&nbsp;int.parse(e)&nbsp;&lt;=&nbsp;0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;dataList;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///data&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataList:&nbsp;[&quot;81&quot;,&nbsp;&quot;82&quot;,&nbsp;&quot;83&quot;,&nbsp;&quot;84&quot;,&nbsp;&quot;85&quot;,&nbsp;&quot;86&quot;,&nbsp;&quot;87&quot;,&nbsp;&quot;88&quot;,&nbsp;&quot;89&quot;,&nbsp;&quot;90&quot;],</p>
 
-## Getting started
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///delta&nbsp;offset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anchorOffset:&nbsp;85&nbsp;*&nbsp;3,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);</p>
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+<p>&nbsp;&nbsp;&nbsp;&nbsp;///load&nbsp;next&nbsp;items<br>
+&nbsp;&nbsp;&nbsp;&nbsp;WidgetsBinding.instance.addPostFrameCallback((_)&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_controller.loadHeadItems();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;});<br>
+&nbsp;&nbsp;&nbsp;&nbsp;super.initState();<br>
+&nbsp;&nbsp;}</p>
 
-## Usage
+<p>&nbsp;&nbsp;@override<br>
+&nbsp;&nbsp;Widget&nbsp;build(BuildContext&nbsp;context)&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;Material(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color:&nbsp;Colors.red,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child:&nbsp;SafeArea(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top:&nbsp;true,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom:&nbsp;true,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child:&nbsp;Stack(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;children:&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_buildTestPage(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_buildButton(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;}</p>
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+<p>&nbsp;&nbsp;Widget&nbsp;_buildButton()&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;Align(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment:&nbsp;Alignment.bottomCenter,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child:&nbsp;GestureDetector(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;behavior:&nbsp;HitTestBehavior.translucent,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onTap:&nbsp;()&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_controller.animateToItem(&quot;100&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child:&nbsp;Container(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width:&nbsp;double.infinity,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;margin:&nbsp;const&nbsp;EdgeInsets.fromLTRB(30,&nbsp;10,&nbsp;30,&nbsp;50),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height:&nbsp;30,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decoration:&nbsp;BoxDecoration(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color:&nbsp;Colors.blue,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;borderRadius:&nbsp;BorderRadius.circular(16),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;}</p>
 
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+<p>&nbsp;&nbsp;///build&nbsp;test&nbsp;page<br>
+&nbsp;&nbsp;Widget&nbsp;_buildTestPage()&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;AnimatedAdditionListView(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;controller:&nbsp;_controller,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;padding:&nbsp;EdgeInsets.zero,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reverse:&nbsp;true,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;physics:&nbsp;const&nbsp;BouncingScrollPhysics(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itemBuilder:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(BuildContext&nbsp;context,&nbsp;int&nbsp;index,&nbsp;Animation&lt;double&gt;&nbsp;animation)&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;SlideTransition(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position:&nbsp;animation.drive(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tween&lt;Offset&gt;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;begin:&nbsp;const&nbsp;Offset(-1,&nbsp;0),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end:&nbsp;const&nbsp;Offset(0,&nbsp;0),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child:&nbsp;Container(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment:&nbsp;Alignment.center,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width:&nbsp;double.infinity,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decoration:&nbsp;const&nbsp;BoxDecoration(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color:&nbsp;Colors.white,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border:&nbsp;Border(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom:&nbsp;BorderSide(color:&nbsp;Colors.black12,&nbsp;width:&nbsp;0.3),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height:&nbsp;85,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child:&nbsp;Text(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_controller.dataList[index],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style:&nbsp;const&nbsp;TextStyle(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fontSize:&nbsp;15,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color:&nbsp;Colors.black,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fontWeight:&nbsp;FontWeight.w500,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onItemShow:&nbsp;(List&lt;String&gt;&nbsp;dataList)&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(dataList.join(&quot;,&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;}<br>
+}</p>
