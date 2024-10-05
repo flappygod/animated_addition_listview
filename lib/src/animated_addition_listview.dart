@@ -393,6 +393,12 @@ class _AnimatedAdditionListViewState<T>
     if (!mounted) {
       return;
     }
+
+    ///is scrolling or not
+    if (widget.controller.scrollController.isScrolling()) {
+      return;
+    }
+
     if (widget.onItemShow != null) {
       ///item show
       List<T> dataList = [];

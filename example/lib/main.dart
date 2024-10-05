@@ -114,7 +114,7 @@ class _AnimatedAdditionTestState extends State<AnimatedAdditionTest> {
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-          _controller.animateToItem("100");
+          _controller.animateToItem("10010");
         },
         child: Container(
           width: double.infinity,

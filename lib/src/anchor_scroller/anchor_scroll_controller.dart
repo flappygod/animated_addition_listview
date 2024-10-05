@@ -171,6 +171,11 @@ class AnchorScrollControllerHelper {
     return tmpIndex;
   }
 
+  ///is scrolling or not
+  bool isScrolling() {
+    return _isScrollingToIndex;
+  }
+
   /// 当前是否正在滚动到某个索引
   bool _isScrollingToIndex = false;
 
@@ -304,6 +309,7 @@ class AnchorScrollControllerHelper {
         scrollController.jumpTo(targetScrollOffset);
       }
 
+      //set current index
       _currIndex = index;
       _isScrollingToIndex = false;
     }
@@ -375,18 +381,14 @@ class AnchorScrollControllerHelper {
 ///anchor scroll controller
 class AnchorScrollController extends ScrollController {
   AnchorScrollController({
-    double initialScrollOffset = 0.0,
-    bool keepScrollOffset = true,
-    String? debugLabel,
+    super.initialScrollOffset,
+    super.keepScrollOffset,
+    super.debugLabel,
     this.onIndexChanged,
     this.fixedItemSize,
     this.anchorOffsetAll = 0,
     double? pinOffset,
-  }) : super(
-          initialScrollOffset: initialScrollOffset,
-          keepScrollOffset: keepScrollOffset,
-          debugLabel: debugLabel,
-        ) {
+  }) {
     _helper = AnchorScrollControllerHelper(
       scrollController: this,
       anchorOffsetAll: anchorOffsetAll,
@@ -396,16 +398,16 @@ class AnchorScrollController extends ScrollController {
     );
   }
 
-  // 锚点偏移量
+  //锚点偏移量
   final double anchorOffsetAll;
 
-  // 固定的项目大小
+  //固定的项目大小
   final double? fixedItemSize;
 
-  // 索引更改时的回调
+  //索引更改时的回调
   final IndexChanged? onIndexChanged;
 
-  // 帮助类实例
+  //帮助类实例
   late final AnchorScrollControllerHelper _helper;
 
   /// 添加索引监听器
@@ -431,6 +433,10 @@ class AnchorScrollController extends ScrollController {
   /// 获取项目映射
   Map<int, AnchorItemWrapperState> get itemMap {
     return _helper.itemMap;
+  }
+
+  bool isScrolling() {
+    return _helper.isScrolling();
   }
 
   @override
