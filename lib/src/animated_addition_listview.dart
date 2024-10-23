@@ -279,15 +279,13 @@ class _AnimatedAdditionListViewState<T>
   ///handle notification
   bool _handleNotification(ScrollNotification notification) {
     ///加载之前的消息，FormerMessages
-    if (notification is ScrollEndNotification &&
-        notification.metrics.pixels >=
-            notification.metrics.maxScrollExtent - widget.loadOffset) {
+    if (notification.metrics.pixels >=
+        notification.metrics.maxScrollExtent - widget.loadOffset) {
       _loadTailItems();
     }
 
     ///加载新的消息
-    if (notification is ScrollEndNotification &&
-        notification.metrics.pixels <= widget.loadOffset) {
+    if (notification.metrics.pixels <= widget.loadOffset) {
       _loadHeadItems();
     }
 
@@ -299,7 +297,16 @@ class _AnimatedAdditionListViewState<T>
     return false;
   }
 
+  ///加载尾部数据
+  bool _isLoadingTailFlag = false;
   void _loadTailItems() {
+    ///load tail flags
+    if (_isLoadingTailFlag == false) {
+      _isLoadingTailFlag = true;
+    } else {
+      return;
+    }
+
     ///加载尾部数据
     widget.controller._listLock.synchronized(() async {
       ///check is tail end
@@ -329,13 +336,23 @@ class _AnimatedAdditionListViewState<T>
         formerList.length,
         isAsync: true,
       );
+      _isLoadingTailFlag = false;
     }).then((_) {
       setState(() {});
     });
   }
 
   ///加载头部数据
+  bool _isLoadingHeadFlag = false;
+
+  ///加载头部数据
   void _loadHeadItems() {
+    ///load head flags
+    if (_isLoadingHeadFlag == false) {
+      _isLoadingHeadFlag = true;
+    } else {
+      return;
+    }
     widget.controller._listLock.synchronized(() async {
       ///check is tail end
       if (widget.controller.pageSizeCheck && widget.controller._isHeadEnd) {
@@ -380,6 +397,9 @@ class _AnimatedAdditionListViewState<T>
           );
         }
       });
+
+      ///flag set
+      _isLoadingHeadFlag = false;
     }).then((_) {
       ///set state
       if (mounted) {

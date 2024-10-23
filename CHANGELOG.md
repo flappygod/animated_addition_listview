@@ -1,3 +1,3 @@
-## 1.0.1
+## 1.0.2
 
-* Fix bugs in anchor scroll view and remove un need code.
+* This packages is no longer maintenance，Use free_scroll_listview instead.

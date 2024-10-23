@@ -1,3 +1,9 @@
+
+* This packages is no longer maintenance，Use free_scroll_listview instead.
+* 因为ListView中存在不可调和的位置问题（比如从头部添加大高度数据时/手势滚动时无法精准定位位置而不导致闪烁，无法在---滚动的过程中/非滚动结束---流畅加载更多的头部数据），所以此库已经废弃，请使用free_scroll_listview替代。
+* free_scroll_listview 将提供更流畅的加载方式和滚动动画。
+
+
 <p>
 ///animated&nbsp;addition&nbsp;test&nbsp;page<br>
 class&nbsp;AnimatedAdditionTest&nbsp;extends&nbsp;StatefulWidget&nbsp;{<br>
